@@ -1,8 +1,8 @@
-//solution 3
+
 var basicSalary = parseFloat(prompt("Enter the basic salary:"));
 var benefits = parseFloat(prompt("Enter the benefits:"));
 
-// Constants for tax rates and NHIF contributions
+
 var taxRates = [
   { min: 0, max: 24000, rate: 10 },
   { min: 24001, max: 32333, rate: 15 },
@@ -31,26 +31,25 @@ var nhifContributions = [
   { min: 100000, max: Infinity, contribution: 1700 }
 ];
 
-// Calculate payee (income tax)
+
 var taxableIncome = basicSalary + benefits;
-var payee =0;
+var payee = 0;
  
 
-for (var payee = 0; payee < taxRates; payee++) {
-  var taxRate = taxRates[payee];
+for (var i = 0; i < taxRates.length; i++) { 
+  var taxRate = taxRates[i];
   if (taxableIncome > taxRate.max) {
-    payee + (taxRate.max - taxRate.min + 1) * (taxRate.rate / 100);
+    payee += (taxRate.max - taxRate.min + 1) * (taxRate.rate / 100); 
   } else {
-    payee + (taxableIncome - taxRate.min + 1) * (taxRate.rate / 100);
+    payee += (taxableIncome - taxRate.min + 1) * (taxRate.rate / 100);
     break;
   }
 }
 
-// Calculate NHIF contribution
+
 var nhifContribution = 0;
 
-//j = salary
-for (var j = 0; j < nhifContributions; j++) {
+for (var j = 0; j < nhifContributions.length; j++) { 
   var nhifRange = nhifContributions[j];
   if (taxableIncome > nhifRange.max) {
     nhifContribution = nhifRange.contribution;
@@ -60,18 +59,18 @@ for (var j = 0; j < nhifContributions; j++) {
   }
 }
 
-// Calculate NSSF deduction
-var nssfDeduction = basicSalary * 0.06; // Assuming NSSF contribution rate is 6%
 
-// Calculate gross salary
+var nssfDeduction = basicSalary * 0.06;
+
+
 var grossSalary = basicSalary + benefits;
 
-// Calculate net salary
+
 var netSalary = grossSalary - payee - nhifContribution - nssfDeduction;
 
-// Display the results
+
 console.log("Payee (Income Tax): " + payee.toFixed(2));
 console.log("NHIF Contribution: " + nhifContribution.toFixed(2));
 console.log("NSSF Deduction: " + nssfDeduction.toFixed(2));
 console.log("Gross Salary: " + grossSalary.toFixed(2));
-console.log("Net Salary: " + netSalary.toFixed(2));
+console.log("Net Salary: " + netSalary.toFixed(2)); // added toFixed() method for formatting output
